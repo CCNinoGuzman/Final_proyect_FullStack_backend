@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "project",
     "invitation",
+    "history",
     'rest_framework',
 ]
 
