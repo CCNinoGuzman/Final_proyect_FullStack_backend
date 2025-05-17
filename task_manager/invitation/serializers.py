@@ -1,7 +1,7 @@
 from rest_framework import serializers  
-from .models import invitation
+from .models import Invitation
 
-class ProjectSerializer(serializers.ModelSerializer):
+class InvitationSerializer(serializers.ModelSerializer):
     class Meta:
-        model = invitation
-        fields = ['id', 'email', 'project_id', 'state', 'token']
+        model = Invitation
+        fields = '__all__'

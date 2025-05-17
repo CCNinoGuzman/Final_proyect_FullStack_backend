@@ -11,7 +11,7 @@ class Invitation(models.Model):
 
     id = models.AutoField(primary_key=True)
     email = models.EmailField(max_length=255)
-    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='invitations')
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
     state = models.CharField(max_length=10, choices=STATES, default='pending')
     token = models.CharField(max_length=50, unique=True)
 
