@@ -7,7 +7,7 @@ from .serializers import InvitationSerializer
 from django.shortcuts import get_object_or_404
 
 @api_view(['GET', 'POST'])
-def invitation_list(request):
+def list_invitation(request):
     if request.method == 'GET':
         invitations = Invitation.objects.all()
         serializer = InvitationSerializer(invitations, many=True)
@@ -55,4 +55,12 @@ def delete_invitation(request, pk):
         invitation = get_object_or_404(Invitation, pk=pk)
         invitation.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    return Response(status=status.HTTP_404_NOT_FOUND)
+
+@api_view(['GET'])
+def detail_invitation(request, pk):
+    if request.method == 'GET':
+        invitation = get_object_or_404(Invitation, pk=pk)
+        serializer = InvitationSerializer(invitation)
+        return Response(serializer.data)
     return Response(status=status.HTTP_404_NOT_FOUND)

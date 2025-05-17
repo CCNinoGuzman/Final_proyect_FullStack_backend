@@ -8,7 +8,7 @@ from django.shortcuts import get_object_or_404
 
 # Create your views here.
 @api_view(['GET', 'POST'])
-def project_list(request):
+def list_project(request):
     if request.method == 'GET':
         projects = Project.objects.all()
         serializer = ProjectSerializer(projects, many=True)
