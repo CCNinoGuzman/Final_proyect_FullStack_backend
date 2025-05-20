@@ -1,0 +1,21 @@
+<h2>USUARIOS</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Contraseña</th>
+            <th>Correo</th>
+        </tr>
+
+    </thead>
+    <tbody>
+        {% for item in usuarios %}
+        <tr>
+            <td>{{ item.nombre }}</td>
+            <td>{{ item.contraseña }}</td>
+            <td>{{ item.correo }}</td>
+        </tr>
+        {% endfor %}  
+    </tbody>
+</table>
