@@ -14,16 +14,11 @@ ALLOWED_HOSTS = []
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-<<<<<<< Updated upstream
-        "NAME": BASE_DIR / "db.sqlite3",
-=======
         "NAME": os.getenv("DARABASE_NAME"),
         'USER': os.getenv("DATABASE_USER"),
         'PASSWORD': os.getenv("DATABASE_PASSWORD"),
         'HOST': os.getenv("DATABASE_HOST"),
         'PORT': os.getenv("DATABASE_PORT"),
-
->>>>>>> Stashed changes
     }
 }
 
