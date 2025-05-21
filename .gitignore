@@ -8,9 +8,14 @@ __pycache__/
 environment/
 env/
 venv/
-
+.env
 # macOS
 .DS_Store
 
 # VS Code
 .vscode/
+
+# Django migrations
+*/migrations/
+*/migrations/*.py
+*/migrations/*.pyc
