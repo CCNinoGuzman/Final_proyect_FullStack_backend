@@ -1,8 +1,8 @@
 from django.shortcuts import get_object_or_404
 from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from rest_framework.status import status 
+from .models import roles 
 from .serializers import RolesSerializer
+from rest_framework import viewsets
 
 # Create your views here.
 
