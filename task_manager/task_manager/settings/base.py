@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     "project",
     "invitation",
     "history",
-    'rest_framework',
+    "userstories"
+    "rest_framework",
+
 ]
 
 MIDDLEWARE = [
