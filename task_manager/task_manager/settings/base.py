@@ -38,8 +38,8 @@ INSTALLED_APPS = [
     "project",
     "invitation",
     "history",
-    "userstories"
     "rest_framework",
+    "userstories"
 
 ]
 
