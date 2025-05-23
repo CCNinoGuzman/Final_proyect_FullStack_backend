@@ -16,8 +16,13 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+
+from task_manager import userstories
+
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path('api/userstiries_app', include(userstories.urls))
+   
 ]
