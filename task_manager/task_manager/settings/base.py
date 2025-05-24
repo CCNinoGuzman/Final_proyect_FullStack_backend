@@ -39,8 +39,9 @@ INSTALLED_APPS = [
     "invitation",
     "history",
     "rest_framework",
-    "userstories"
-
+    "userstories",
+    "roles",
+    "tasks"
 ]
 
 MIDDLEWARE = [
