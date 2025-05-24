@@ -1,12 +1,15 @@
 from django.shortcuts import render
-from rest_framework.decorators  import api_view
+from rest_framework.decorators  import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Invitation
 from .serializers import InvitationSerializer
 from django.shortcuts import get_object_or_404
+from rest_framework.permissions import IsAuthenticated
+
 
 @api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
 def list_invitation(request):
     if request.method == 'GET':
         invitations = Invitation.objects.all()
@@ -20,6 +23,7 @@ def list_invitation(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def invitation_project(request, project_id):
     if request.method == 'GET':
         invitations = Invitation.objects.filter(project_id=project_id)
