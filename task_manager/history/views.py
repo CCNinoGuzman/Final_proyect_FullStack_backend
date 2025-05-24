@@ -1,25 +1,29 @@
 from django.shortcuts import render
-from rest_framework.decorators  import api_view
+from rest_framework.decorators  import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework import status
 from .models import History
 from .serializers import HistorySerializer  
 from django.shortcuts import get_object_or_404
+from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def history_by_task(request, task_id):
         history = History.objects.filter(task_id=task_id)
         serializer = HistorySerializer(history, many=True)
         return Response(serializer.data)
     
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def history_by_user(request, user_id):
         history = History.objects.filter(user_id=user_id)
         serializer = HistorySerializer(history, many=True)
         return Response(serializer.data)
 
 @api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
 def list_history(request):
     if request.method == 'GET':
         histories = History.objects.all()
@@ -33,6 +37,7 @@ def list_history(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 @api_view(['GET', 'PUT', 'DELETE']) 
+@permission_classes([IsAuthenticated])
 def detail_history(request, pk):
     history = get_object_or_404(History, pk=pk)
     if request.method == 'GET':
