@@ -36,6 +36,10 @@ INSTALLED_APPS = [
     "project",
     "invitation",
     "history",
+    'rest_framework',
+    "userstories",
+    "roles",
+    "tasks"
     "rest_framework",
     "rest_framework_simplejwt",
     "authentication",
