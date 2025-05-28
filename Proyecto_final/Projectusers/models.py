@@ -5,10 +5,9 @@ from Users.models import Usuario
 # Create your models here.      
 class Projectuser(models.Model):
     id = models.AutoField(primary_key=True)
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    user = models.ForeignKey(Usuario, on_delete=models.CASCADE)
- 
-class Projectuser(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(Usuario, on_delete=models.CASCADE, null=True)
+    
     ROLE_CHOICES = [
         ('PMO', 'PMO'),
         ('Scrum Master', 'Scrum Master'),
