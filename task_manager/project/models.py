@@ -1,4 +1,5 @@
 from django.db import models
+from user.models import User
 
 # Create your models here.
 class Project(models.Model):
@@ -10,8 +11,7 @@ class Project(models.Model):
         ('closed','Closed')
     ]
     state = models.CharField(max_length=20, choices=STATES, default='active')
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name    
