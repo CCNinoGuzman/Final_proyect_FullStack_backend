@@ -18,6 +18,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 dot_env_path = os.path.join(BASE_DIR, '.env')
 load_dotenv(dot_env_path)
+print(dot_env_path)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
@@ -39,10 +40,11 @@ INSTALLED_APPS = [
     'rest_framework',
     "userstories",
     "roles",
-    "tasks"
-    "rest_framework",
+    "tasks",
     "rest_framework_simplejwt",
     "authentication",
+    "Users",
+    "Projectusers",
 ]
 
 MIDDLEWARE = [
@@ -56,13 +58,12 @@ MIDDLEWARE = [
 ]
 
 REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework_simpleJWT.authentication.JWTAuthentication",
-
+    'DEFAULT_AUTHENTICATION_CLASSES' : [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
-    "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permissions.IsAuthenticatedorReadOnly",
-    ],
+    'DEFAULT_PERMISSION_CLASSES' : [
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly'
+    ]
 }
 
 ROOT_URLCONF = "task_manager.urls"
