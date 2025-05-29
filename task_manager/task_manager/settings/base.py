@@ -18,7 +18,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 dot_env_path = os.path.join(BASE_DIR, '.env')
 load_dotenv(dot_env_path)
-print(dot_env_path)
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
