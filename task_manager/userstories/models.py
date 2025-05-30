@@ -1,6 +1,6 @@
 from django.db import models
 
-from task_manager.project.models import Project
+from project.models import Project
 
 # Create your models here.
 class Userstories(models.Model):
