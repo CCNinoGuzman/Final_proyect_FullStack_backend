@@ -4,7 +4,7 @@ from rest_framework import status
 from django.shortcuts import get_object_or_404
 
 from .models import Projectuser
-from .Serializers.pu_serializers import ProjectuserSerializer
+from .serializers import ProjectuserSerializer
 
 
 @api_view(['GET'])

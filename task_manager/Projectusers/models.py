@@ -1,12 +1,12 @@
 from django.db import models
 from project.models import Project
-from Users.models import Usuario
+from users.models import User
 
 # Create your models here.      
 class Projectuser(models.Model):
     id = models.AutoField(primary_key=True)
     project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True)
-    user = models.ForeignKey(Usuario, on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     
     ROLE_CHOICES = [
         ('PMO', 'PMO'),

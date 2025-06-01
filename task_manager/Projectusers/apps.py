@@ -3,4 +3,4 @@ from django.apps import AppConfig
 
 class ProjectusersConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'Projectusers'
+    name = 'projectusers'

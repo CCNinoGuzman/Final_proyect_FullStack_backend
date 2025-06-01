@@ -1,20 +1,20 @@
 from rest_framework import serializers
-from Projectusers.models import Projectuser
-from Users.models import Usuario
+from projectusers.models import Projectuser
+from users.models import User
 
 class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Projectuser
         fields = ['id', 'name']  # Ajusta los campos según tu modelo Project
 
-class UsuarioSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Usuario
+        model = User
         fields = ['id', 'name']  # Ajusta los campos según tu modelo Usuario
 
 class ProjectuserSerializer(serializers.ModelSerializer):
     project = ProjectSerializer(read_only=True)
-    user = UsuarioSerializer(read_only=True)
+    user = UserSerializer(read_only=True)
     
     class Meta:
         model = Projectuser
