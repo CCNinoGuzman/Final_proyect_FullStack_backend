@@ -11,16 +11,27 @@ def login_view(request):
     """
     View to handle user login and return JWT tokens.
     """
-    username = request.data.get('username')
-    password = request.data.get('password')
 
-    user = authenticate(request, username=username, password=password)
+    #Obtenemos el usuario y contraseña que han sido enviados
+    email_from_client = request.data.get('email')
+    password_from_client = request.data.get('password')
 
-    if user is not None:
+    #Validamos que el usuario exista en la bd
+    user = authenticate(request, username = email_from_client, password = password_from_client)
+
+    #Generamos el token su el usuario existe en la bd
+    if user and user.is_active:
         refresh = RefreshToken.for_user(user)
         return Response({
             'refresh': str(refresh),
-            'access': str(refresh.access_token),
-        }, status=status.HTTP_200_OK)
+            'token': str(refresh.access_token),
+        },
+        status=status.HTTP_200_OK
+        )
     else:
-        return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+        return Response(
+            {
+                'error': 'Invalid credentials'
+             }, 
+             status.HTTP_401_UNAUTHORIZED
+        )

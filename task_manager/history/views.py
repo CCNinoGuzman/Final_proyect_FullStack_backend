@@ -23,6 +23,7 @@ def history_by_user(request, user_id):
         return Response(serializer.data)
 
 @api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
 def list_history(request):
     if request.method == 'GET':
         histories = History.objects.all()
@@ -36,7 +37,7 @@ def list_history(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 @api_view(['GET', 'PUT', 'DELETE']) 
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def detail_history(request, pk):
     history = get_object_or_404(History, pk=pk)
     if request.method == 'GET':

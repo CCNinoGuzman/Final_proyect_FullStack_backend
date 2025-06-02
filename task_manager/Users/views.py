@@ -7,14 +7,18 @@ from rest_framework import status
 from users.models import User
 from .serializers import UserSerializer
 from django.urls import path
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import permission_classes
 
 @api_view (['GET'])
+@permission_classes([IsAuthenticated])
 def list_users (request):
     list_user = User.objects.all () #select * from usuarios
     serializer = UserSerializer(list_user, many =True)
     return Response(serializer.data, status.HTTP_200_OK)
 
 @api_view (['POST'])
+@permission_classes([IsAuthenticated])
 def create_users(request):
     '''Crear usuario'''
     serializer = UserSerializer (data= request.data)
@@ -26,6 +30,7 @@ def create_users(request):
    
 
 @api_view(['GET', 'PUT', 'DELETE'])
+@permission_classes([IsAuthenticated])
 def detail_users(request, user_id):
     user = get_object_or_404(User, id=user_id)
 
