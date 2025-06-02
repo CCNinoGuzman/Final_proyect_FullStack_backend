@@ -9,7 +9,7 @@ from rest_framework.permissions import IsAuthenticated
 
 
 @api_view(['GET', 'POST'])
-@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])
 def list_invitation(request):
     if request.method == 'GET':
         invitations = Invitation.objects.all()
@@ -23,7 +23,7 @@ def list_invitation(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])
 def invitation_project(request, project_id):
     if request.method == 'GET':
         invitations = Invitation.objects.filter(project_id=project_id)
@@ -41,6 +41,15 @@ def accept_invitation(request, pk):
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
     return Response(status=status.HTTP_404_NOT_FOUND)
+
+@api_view(['PUT', 'PATCH'])
+def update_invitation(request, pk):
+    invitation = get_object_or_404(Invitation, pk=pk)
+    serializer = InvitationSerializer(invitation, data=request.data, partial=(request.method == 'PATCH'))
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['PATCH'])
 def decline_invitation(request, pk):
@@ -61,10 +70,3 @@ def delete_invitation(request, pk):
         return Response(status=status.HTTP_204_NO_CONTENT)
     return Response(status=status.HTTP_404_NOT_FOUND)
 
-@api_view(['GET'])
-def detail_invitation(request, pk):
-    if request.method == 'GET':
-        invitation = get_object_or_404(Invitation, pk=pk)
-        serializer = InvitationSerializer(invitation)
-        return Response(serializer.data)
-    return Response(status=status.HTTP_404_NOT_FOUND)

@@ -3,5 +3,5 @@ from roles.views import rolesViewset
 
 router=DefaultRouter()
 
-router.register('roles', rolesViewset, basename='roles')
+router.register('', rolesViewset, basename='roles')
 urlpatterns= router.urls

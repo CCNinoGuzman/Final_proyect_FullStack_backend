@@ -3,5 +3,5 @@ from tasks.views import TasksVieeSet
 
 router=DefaultRouter()
 
-router.register('tasks', TasksVieeSet, basename='tasks')
+router.register(r'', TasksVieeSet, basename='tasks')
 urlpatterns= router.urls
