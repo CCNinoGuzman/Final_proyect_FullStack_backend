@@ -43,8 +43,8 @@ INSTALLED_APPS = [
     "tasks",
     "rest_framework_simplejwt",
     "authentication",
-    "Users",
-    "Projectusers",
+    "users",
+    "projectusers",
 ]
 
 MIDDLEWARE = [
@@ -57,14 +57,14 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES' : [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ],
-    'DEFAULT_PERMISSION_CLASSES' : [
-        'rest_framework.permissions.IsAuthenticatedOrReadOnly'
-    ]
-}
+# REST_FRAMEWORK = {
+#     'DEFAULT_AUTHENTICATION_CLASSES' : [
+#         'rest_framework_simplejwt.authentication.JWTAuthentication',
+#     ],
+#     'DEFAULT_PERMISSION_CLASSES' : [
+#         'rest_framework.permissions.IsAuthenticatedOrReadOnly'
+#     ]
+# }
 
 ROOT_URLCONF = "task_manager.urls"
 
@@ -120,7 +120,9 @@ USE_TZ = True
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-AUTHG_USER_MODEL = "users.User"
+AUTH_USER_MODEL = "users.User"
+
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes= int(os.getenv("ACCESS_TOKEN_LIFETIME", 5))),
@@ -130,7 +132,7 @@ SIMPLE_JWT = {
     "UPDATE_LAST_LOGIN": False,
 
     "ALGORITHM": "HS256",
-    "SIGNING_KEY": os.getenv("SECRET_KEY"),
+    "SIGNING_KEY": os.getenv('SECRET_KEY'),
     "VERIFYING_KEY": "",
     "AUDIENCE": None,
     "ISSUER": None,

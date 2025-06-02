@@ -1,5 +1,5 @@
 from django.db import models
-from Users.models import Usuario
+from users.models import User
 
 # Create your models here.
 class Project(models.Model):
@@ -11,7 +11,7 @@ class Project(models.Model):
         ('closed','Closed')
     ]
     state = models.CharField(max_length=20, choices=STATES, default='active')
-    user = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
 
     def __str__(self):
         return self.name    

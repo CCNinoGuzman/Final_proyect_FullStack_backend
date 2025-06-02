@@ -10,7 +10,7 @@ from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
 @api_view(['GET', 'POST'])
-@permission_classes([IsAuthenticated])
+
 def list_project(request):
     if request.method == 'GET':
         projects = Project.objects.all()
@@ -24,9 +24,9 @@ def list_project(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 @api_view(['GET', 'PUT', 'DELETE'])
-@permission_classes([IsAuthenticated])
-def detail_project(request, project_id):
-    project = get_object_or_404(Project, id=project_id)
+
+def detail_project(request, id):
+    project = get_object_or_404(Project, id=id)
     if request.method == 'GET':
         serializer = ProjectSerializer(project)
         return Response(serializer.data)
