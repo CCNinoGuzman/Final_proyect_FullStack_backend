@@ -2,7 +2,6 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import get_object_or_404
-
 from .models import Projectuser
 from .serializers import ProjectuserSerializer
 
@@ -25,8 +24,8 @@ def create_projectuser(request):
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
-def detail_projectuser(request, pk):
-    projectuser = get_object_or_404(Projectuser, pk=pk)
+def detail_projectuser(request, id):
+    projectuser = get_object_or_404(Projectuser, id=id)
 
     if request.method == 'GET':
         serializer = ProjectuserSerializer(projectuser)
