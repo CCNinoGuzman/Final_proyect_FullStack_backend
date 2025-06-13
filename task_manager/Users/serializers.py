@@ -1,6 +1,6 @@
 import re
 from rest_framework import serializers
-from users.models import User
+from Users.models import User
 
 def validate_unique_name(value):
     if User.objects.filter(name__iexact=value).exists():

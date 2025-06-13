@@ -1,6 +1,6 @@
 from django.db import models
 from project.models import Project
-from users.models import User
+from Users.models import User
 
 # Create your models here.      
 class Projectuser(models.Model):

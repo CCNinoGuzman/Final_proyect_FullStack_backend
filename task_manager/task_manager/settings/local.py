@@ -10,8 +10,10 @@ load_dotenv(dot_env_path)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
+'''ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
+'''
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
