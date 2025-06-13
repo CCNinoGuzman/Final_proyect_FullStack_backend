@@ -24,7 +24,7 @@ load_dotenv(dot_env_path)
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("SECRET_KEY")
+SECRET_KEY =  os.getenv('SECRET_KEY'),
 # Application definition
 
 INSTALLED_APPS = [
@@ -43,8 +43,8 @@ INSTALLED_APPS = [
     "tasks",
     "rest_framework_simplejwt",
     "authentication",
-    "users",
-    "projectusers",
+    "Users",
+    "Projectusers",
 ]
 
 MIDDLEWARE = [
@@ -57,14 +57,14 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-# REST_FRAMEWORK = {
-#     'DEFAULT_AUTHENTICATION_CLASSES' : [
-#         'rest_framework_simplejwt.authentication.JWTAuthentication',
-#     ],
-#     'DEFAULT_PERMISSION_CLASSES' : [
-#         'rest_framework.permissions.IsAuthenticatedOrReadOnly'
-#     ]
-# }
+REST_FRAMEWORK = {
+     'DEFAULT_AUTHENTICATION_CLASSES' : [
+         'rest_framework_simplejwt.authentication.JWTAuthentication',
+     ],
+     'DEFAULT_PERMISSION_CLASSES' : [
+         'rest_framework.permissions.IsAuthenticatedOrReadOnly'
+     ]
+}
 
 ROOT_URLCONF = "task_manager.urls"
 
@@ -120,12 +120,18 @@ USE_TZ = True
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-AUTH_USER_MODEL = "users.User"
+AUTH_USER_MODEL = "Users.User"
 
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
+ALLOWED_HOSTS = [
+    '127.0.0.1:8000',
+    'localhost',
+]  
+
+'''os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")'''
+
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes= int(os.getenv("ACCESS_TOKEN_LIFETIME", 5))),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes= int(5)), '''os.getenv("ACCESS_TOKEN_LIFETIME", 5)'''
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
     "ROTATE_REFRESH_TOKENS": False,
     "BLACKLIST_AFTER_ROTATION": False,
