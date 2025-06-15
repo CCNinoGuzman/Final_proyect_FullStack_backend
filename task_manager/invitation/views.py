@@ -62,11 +62,16 @@ def decline_invitation(request, pk):
         return Response(serializer.errors, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
     return Response(status=status.HTTP_404_NOT_FOUND)
 
-@api_view(['DELETE'])
-def delete_invitation(request, pk):
-    if request.method == 'DELETE':
-        invitation = get_object_or_404(Invitation, pk=pk)
+@api_view(['GET', 'DELETE'])
+def invitation_detail(request, pk):
+    """
+    Devuelve el detalle de una invitación por su ID o la elimina.
+    """
+    invitation = get_object_or_404(Invitation, pk=pk)
+    if request.method == 'GET':
+        serializer = InvitationSerializer(invitation)
+        return Response(serializer.data)
+    elif request.method == 'DELETE':
         invitation.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-    return Response(status=status.HTTP_404_NOT_FOUND)
-
+        return Response({'mensaje': 'Invitación eliminada'}, status=204)
+    
