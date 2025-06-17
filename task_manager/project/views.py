@@ -5,7 +5,7 @@ from rest_framework import status
 from .models import Project
 from .serializers import ProjectSerializer  
 from django.shortcuts import get_object_or_404
-from rest_framework.permissions import IsAuthenticated
+#from rest_framework.permissions import IsAuthenticated
 
 
 # Create your views here.

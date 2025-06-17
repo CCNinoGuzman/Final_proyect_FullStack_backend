@@ -5,18 +5,18 @@ from rest_framework import status
 from .models import History
 from .serializers import HistorySerializer  
 from django.shortcuts import get_object_or_404
-from rest_framework.permissions import IsAuthenticated
+#from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+#@permission_classes([IsAuthenticated])
 def history_by_task(request, task_id):
         history = History.objects.filter(task_id=task_id)
         serializer = HistorySerializer(history, many=True)
         return Response(serializer.data)
     
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+#@permission_classes([IsAuthenticated])
 def history_by_user(request, user_id):
         history = History.objects.filter(user_id=user_id)
         serializer = HistorySerializer(history, many=True)

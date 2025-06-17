@@ -1,6 +1,6 @@
 from django.db import models
 from tasks.models import tasks
-from users.models import User 
+from Users.models import User 
 
 
 class History(models.Model):
