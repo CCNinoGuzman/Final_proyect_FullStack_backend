@@ -3,12 +3,14 @@ from rest_framework.decorators import api_view
 from .models import roles 
 from .serializers import RolesSerializer
 from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
 
 class rolesViewset(viewsets.ModelViewSet):
     queryset = roles.objects.all()
     serializer_class = RolesSerializer
+    permission_classes = [IsAuthenticated]
     
     
     

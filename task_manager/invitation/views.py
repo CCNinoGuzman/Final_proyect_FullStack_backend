@@ -9,7 +9,7 @@ from rest_framework.permissions import IsAuthenticated
 
 
 @api_view(['GET', 'POST'])
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def list_invitation(request):
     if request.method == 'GET':
         invitations = Invitation.objects.all()
@@ -23,7 +23,7 @@ def list_invitation(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 @api_view(['GET'])
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def invitation_project(request, project_id):
     if request.method == 'GET':
         invitations = Invitation.objects.filter(project_id=project_id)
@@ -32,6 +32,7 @@ def invitation_project(request, project_id):
     return Response(status=status.HTTP_404_NOT_FOUND)
 
 @api_view(['PATCH'])
+@permission_classes([IsAuthenticated])
 def accept_invitation(request, pk):
     if request.method == 'PATCH':
         invitation = get_object_or_404(Invitation, pk=pk)
@@ -43,6 +44,7 @@ def accept_invitation(request, pk):
     return Response(status=status.HTTP_404_NOT_FOUND)
 
 @api_view(['PUT', 'PATCH'])
+@permission_classes([IsAuthenticated])
 def update_invitation(request, pk):
     invitation = get_object_or_404(Invitation, pk=pk)
     serializer = InvitationSerializer(invitation, data=request.data, partial=(request.method == 'PATCH'))
@@ -52,6 +54,7 @@ def update_invitation(request, pk):
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['PATCH'])
+@permission_classes([IsAuthenticated])
 def decline_invitation(request, pk):
     if request.method == 'PATCH':
         invitation = get_object_or_404(Invitation, pk=pk)
@@ -62,16 +65,11 @@ def decline_invitation(request, pk):
         return Response(serializer.errors, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
     return Response(status=status.HTTP_404_NOT_FOUND)
 
-@api_view(['GET', 'DELETE'])
-def invitation_detail(request, pk):
-    """
-    Devuelve el detalle de una invitación por su ID o la elimina.
-    """
-    invitation = get_object_or_404(Invitation, pk=pk)
-    if request.method == 'GET':
-        serializer = InvitationSerializer(invitation)
-        return Response(serializer.data)
-    elif request.method == 'DELETE':
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def delete_invitation(request, pk):
+    if request.method == 'DELETE':
+        invitation = get_object_or_404(Invitation, pk=pk)
         invitation.delete()
         return Response({'mensaje': 'Invitación eliminada'}, status=204)
     

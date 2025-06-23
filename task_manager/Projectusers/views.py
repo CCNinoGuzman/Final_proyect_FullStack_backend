@@ -4,9 +4,12 @@ from rest_framework import status
 from django.shortcuts import get_object_or_404
 from .models import Projectuser
 from .serializers import ProjectuserSerializer
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import permission_classes
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def list_projectusers(request):
     projectusers = Projectuser.objects.all()
     serializer = ProjectuserSerializer(projectusers, many=True)
@@ -14,6 +17,7 @@ def list_projectusers(request):
 
 
 @api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def create_projectuser(request):
     serializer = ProjectuserSerializer(data=request.data)
     if serializer.is_valid():
@@ -24,6 +28,7 @@ def create_projectuser(request):
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
+@permission_classes([IsAuthenticated])
 def detail_projectuser(request, id):
     projectuser = get_object_or_404(Projectuser, id=id)
 

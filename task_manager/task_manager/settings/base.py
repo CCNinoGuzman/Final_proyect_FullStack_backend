@@ -13,6 +13,7 @@ import os
 from pathlib import Path
 from datetime import timedelta
 from dotenv import load_dotenv
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -57,14 +58,14 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-# REST_FRAMEWORK = {
-#     'DEFAULT_AUTHENTICATION_CLASSES' : [
-#         'rest_framework_simplejwt.authentication.JWTAuthentication',
-#     ],
-#     'DEFAULT_PERMISSION_CLASSES' : [
-#         'rest_framework.permissions.IsAuthenticatedOrReadOnly'
-#     ]
-# }
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES' : [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES' : [
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly'
+    ]
+}
 
 ROOT_URLCONF = "task_manager.urls"
 
@@ -125,7 +126,7 @@ AUTH_USER_MODEL = "users.User"
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes= int(os.getenv("ACCESS_TOKEN_LIFETIME", 5))),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes = int(os.getenv('ACCESS_TOKEN_LIFETIME'))),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
     "ROTATE_REFRESH_TOKENS": False,
     "BLACKLIST_AFTER_ROTATION": False,

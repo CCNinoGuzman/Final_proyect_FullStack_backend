@@ -1,35 +1,46 @@
+from django.shortcuts import render
+from users.models import User
 from django.shortcuts import get_object_or_404
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from users.models import User
 from .serializers import UserSerializer
+from django.urls import path
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import permission_classes
+from django.contrib.auth import authenticate
 
-@api_view(['GET'])
-def list_users(request):
-    list_user = User.objects.all()
-    serializer = UserSerializer(list_user, many=True)
-    return Response(serializer.data, status=status.HTTP_200_OK)
+@api_view (['GET'])
+@permission_classes([IsAuthenticated])
+def list_users (request):
+    list_user = User.objects.all () #select * from usuarios
+    serializer = UserSerializer(list_user, many =True)
+    return Response(serializer.data, status.HTTP_200_OK)
 
-@api_view(['POST'])
+@api_view (['POST'])
+@permission_classes([IsAuthenticated])
 def create_users(request):
-    serializer = UserSerializer(data=request.data)
+    '''Crear usuario'''
+    serializer = UserSerializer (data= request.data)
     if serializer.is_valid():
         serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-    return Response(serializer.errors, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+        return Response(serializer.data,status= status.HTTP_201_CREATED)
+    else:
+        return Response(serializer.errors, status= status.HTTP_422_UNPROCESSABLE_ENTITY)
+   
 
-@api_view(['GET', 'PUT', 'PATCH', 'DELETE'])
+@api_view(['GET', 'PUT', 'DELETE'])
+@permission_classes([IsAuthenticated])
 def detail_users(request, user_id):
     user = get_object_or_404(User, id=user_id)
 
-    if request.method == 'GET':
+    if request.method == 'GET': 
         serializer = UserSerializer(user)
         return Response(serializer.data)
 
-    elif request.method in ['PUT', 'PATCH']:
-        partial = request.method == 'PATCH'
-        serializer = UserSerializer(user, data=request.data, partial=partial)
+    elif request.method == 'PUT':
+        serializer = UserSerializer(user, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -38,3 +49,17 @@ def detail_users(request, user_id):
     elif request.method == 'DELETE':
         user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+@api_view(['POST'])
+def login_user(request):
+    email = request.data.get('email')
+    password = request.data.get('password')
+    if not email or not password:
+        return Response({'error': 'Email y contraseña son requeridos.'}, status=status.HTTP_400_BAD_REQUEST)
+    
+    user = authenticate(request, username=email, password=password)
+    if user is not None:
+        return Response({'ok': True, 'user_id': user.id}, status=status.HTTP_200_OK)
+    else:
+        return Response({'ok': False, 'error': 'Credenciales inválidas.'}, status=status.HTTP_401_UNAUTHORIZED)    
+    
