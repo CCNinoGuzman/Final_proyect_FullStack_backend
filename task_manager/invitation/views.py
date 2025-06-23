@@ -71,6 +71,5 @@ def delete_invitation(request, pk):
     if request.method == 'DELETE':
         invitation = get_object_or_404(Invitation, pk=pk)
         invitation.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-    return Response(status=status.HTTP_404_NOT_FOUND)
-
+        return Response({'mensaje': 'Invitación eliminada'}, status=204)
+    

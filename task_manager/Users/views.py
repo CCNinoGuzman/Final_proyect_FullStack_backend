@@ -49,4 +49,20 @@ def detail_users(request, user_id):
         user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
     
+@api_view(['POST'])
+def login_user(request):
+    email = request.data.get('email')
+    password = request.data.get('password')
+    if not email or not password:
+        return Response({'error': 'Email y contraseña son requeridos.'}, status=status.HTTP_400_BAD_REQUEST)
+    
+    user = authenticate(request, username=email, password=password)
+    if user is not None:
+        return Response({'ok': True, 'user_id': user.id}, status=status.HTTP_200_OK)
+    else:
+        return Response({'ok': False, 'error': 'Credenciales inválidas.'}, status=status.HTTP_401_UNAUTHORIZED)    
+    
+
+
+from django.contrib.auth import authenticate
 
