@@ -9,6 +9,7 @@ from .serializers import UserSerializer
 from django.urls import path
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import permission_classes
+from django.contrib.auth import authenticate
 
 @api_view (['GET'])
 @permission_classes([IsAuthenticated])
@@ -62,7 +63,3 @@ def login_user(request):
     else:
         return Response({'ok': False, 'error': 'Credenciales inválidas.'}, status=status.HTTP_401_UNAUTHORIZED)    
     
-
-
-from django.contrib.auth import authenticate
-
