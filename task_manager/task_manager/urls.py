@@ -16,6 +16,7 @@ Including another URLconf
 """
 
 from django.urls import path, include
+from rest_framework_simplejwt.views import TokenRefreshView
 
 urlpatterns = [
     path('api/project/', include('project.urls')),
@@ -27,5 +28,6 @@ urlpatterns = [
     path('api/users/', include('users.urls') ),
     path('api/projectuser/', include('projectusers.urls') ),
     path('api/authentication/', include('authentication.urls') ),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
 
