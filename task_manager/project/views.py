@@ -39,3 +39,9 @@ def detail_project(request, id):
     elif request.method == 'DELETE':
         project.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+@api_view(['GET'])
+def projects_by_user(request, user_id):
+    projects = Project.objects.filter(user=user_id)
+    serializer = ProjectSerializer(projects, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
