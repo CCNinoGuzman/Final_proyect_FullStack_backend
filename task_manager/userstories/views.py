@@ -2,7 +2,6 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Userstories
 from .serializer import UserstoriesSerializer
 import logging
 from rest_framework.decorators import api_view
@@ -79,3 +78,11 @@ def userstories_list(request):
 @api_view(['GET'])
 def whoami(request):
     return Response({'user_id': request.user.id, 'username': str(request.user)})
+
+@api_view(['POST'])
+def userstories_create(request):
+    serializer = UserstoriesSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

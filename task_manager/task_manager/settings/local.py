@@ -6,9 +6,9 @@ import os
 dot_env_path = os.path.join(BASE_DIR, '.env')
 load_dotenv(dot_env_path)
 
-
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG")
+
 
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
 
