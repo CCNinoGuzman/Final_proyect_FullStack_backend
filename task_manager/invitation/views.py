@@ -72,4 +72,22 @@ def delete_invitation(request, pk):
         invitation = get_object_or_404(Invitation, pk=pk)
         invitation.delete()
         return Response({'mensaje': 'Invitación eliminada'}, status=204)
+
+@api_view(['GET', 'PUT', 'DELETE'])
+@permission_classes([IsAuthenticated])
+def invitation_detail(request, pk):
+    invitation = get_object_or_404(Invitation, pk=pk)
     
+    if request.method == 'GET':
+        serializer = InvitationSerializer(invitation)
+        return Response(serializer.data)
+    elif request.method == 'PUT':
+        serializer = InvitationSerializer(invitation, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    elif request.method == 'DELETE':
+        invitation.delete()
+        return Response({'mensaje': 'Invitación eliminada'}, status=status.HTTP_204_NO_CONTENT)
+
