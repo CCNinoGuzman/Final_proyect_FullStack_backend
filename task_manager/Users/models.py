@@ -10,10 +10,10 @@ class User (AbstractUser):
         verbose_name='Dirección de correo electrónico'
     )
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
-    username = None  # Disable the username field
+    REQUIRED_FIELDS = ['username']  # username es requerido además del email
 
-
+    def __str__(self):
+        return self.name
     def __str__(self):
         return self.name
     

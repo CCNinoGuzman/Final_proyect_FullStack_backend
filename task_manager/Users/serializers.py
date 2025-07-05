@@ -16,7 +16,7 @@ def validate_password(value):
     if value:
         if not re.search(r'[A-Z]', value):
             raise serializers.ValidationError("La contraseña debe contener al menos una letra mayúscula.")
-        if not re.search(r'[!@#$%^&*(),.?\":{}|<>/]', value):
+        if not re.search(r'[!@#$%^&*(),.?":{}|<>/]', value):
             raise serializers.ValidationError("La contraseña debe contener al menos un carácter especial.")
         if not re.search(r'[a-zA-Z]', value) or not re.search(r'\d', value):
             raise serializers.ValidationError("La contraseña debe contener letras y números.")
@@ -33,10 +33,26 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'username', 'password', 'email']
 
     def create(self, validated_data):
+        # Generar username si no se proporciona
         if not validated_data.get('username'):
             validated_data['username'] = validated_data['email'].split('@')[0]
-        user = User.objects.create_user(**validated_data)
-        return user
+        
+        # Crear usuario usando solo los campos que el modelo acepta
+        try:
+            user = User.objects.create_user(
+                username=validated_data['username'],
+                email=validated_data['email'],
+                password=validated_data['password']
+            )
+            # Asignar el campo name después de crear el usuario
+            if 'name' in validated_data:
+                user.name = validated_data['name']
+                user.save()
+            
+            return user
+        except Exception as e:
+            print(f"Error creating user: {e}")
+            raise serializers.ValidationError(f"Error al crear usuario: {str(e)}")
 
     def update(self, instance, validated_data):
         password = validated_data.pop('password', None)
